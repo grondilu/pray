@@ -6,16 +6,25 @@ use Pray;
 sub MAIN (
 	Str $scene = 'scene.json',
 	Str $image? is copy,
-	Int :$width = 100,
-	Int :$height = 100,
+	Int :$width,
+	Int :$height,
+	Bool :$quiet = False,
+	Bool :$verbose = False,
+	Bool :$preview = !$quiet,
 ) {
-	$image //= $scene.path.basename.subst(/\. .* $$ | $$/, '.ppm');
+	$image //= 
+		$scene.path.basename ~~ /^ (.*) \. .*? $/ ??
+		"$0.ppm" !!
+		'scene.ppm';
 	
 	Pray::render(
 		$scene,
 		$image,
 		$width,
 		$height,
+		:$quiet,
+		:$verbose,
+		:$preview,
 	);
 }
 
