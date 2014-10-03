@@ -1,6 +1,9 @@
 #!/usr/bin/env perl6
 
 use v6;
+
+use lib $?FILE.path.absolute.parent.parent.child('lib');
+
 use Pray;
 
 sub MAIN (
